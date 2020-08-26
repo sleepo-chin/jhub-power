@@ -11,7 +11,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DOCKER_JUPYTER_CONTAINER=jupyterlab_img
+      - DOCKER_JUPYTER_CONTAINER=jupyter-notebook-1
       - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
       - HUB_IP=jupyterhub
       - HOST
@@ -19,7 +19,7 @@ services:
 
   jupyterlab:
     build: jupyterlab
-    image: jupyterlab_img
+    image: jupyter-notebook-1
     container_name: jupyterlab-throaway
     network_mode: none
     command: echo

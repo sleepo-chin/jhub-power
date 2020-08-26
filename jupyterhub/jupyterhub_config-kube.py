@@ -13,11 +13,11 @@ import os
 
 ## Generic
 c.JupyterHub.admin_access = True
-c.KubeSpawner.default_url = '/lab'
+#c.KubeSpawner.default_url = '/lab'
 
 ## Docker spawner
-c.JupyterHub.spawner_class = 'kubespawner.Kubespawner'
-c.KubeSpawner.image = os.environ['KUBE_IMAGE_NAME']
+c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
+c.KubeSpawner.image = "jupyter-notebook-1" 
 # See https://github.com/jupyterhub/dockerspawner/blob/master/examples/oauth/jupyterhub_config.py
 c.JupyterHub.hub_ip = '0.0.0.0'
 
@@ -34,3 +34,7 @@ c.DummyAuthenticator.password = "P@ssw0rd"
 # Other stuff
 c.KubeSpawner.cpu_limit = 1
 c.KubeSpawner.mem_limit = '2G'
+
+c.JupyterHub.shutdown_on_logout = True
+
+c.LocalAuthenticator.create_system_users = True
