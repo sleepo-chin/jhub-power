@@ -1,0 +1,72 @@
+FROM mini-notebook:0.1
+
+USER root
+
+# ffmpeg for matplotlib anim & dvipng for latex labels
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ffmpeg dvipng nodejs npm yarn apt-utils \
+    dnsutils \
+    git \
+    iputils-ping \
+    build-essential curl \ 
+    gnupg2 gnupg gnupg1 &&\
+    rm -rf /var/lib/apt/lists/*
+
+USER $NB_UID
+
+# Install Python 3 packages
+RUN conda install --quiet --yes \
+    'beautifulsoup4=4.9.*' \
+    'conda-forge::blas=*=openblas' \
+    'bokeh=2.1.*' \
+    'cython=0.29.*' \
+    'dask=2.20.*' \
+    'h5py=2.10.*' \
+    'hdf5=1.10.*' \
+    'ipywidgets=7.5.*' \
+    'ipympl=0.5.*'\
+    'matplotlib-base=3.2.*' \
+    'pandas=1.1.*' \
+    'scikit-image=0.17.*' \
+    'scikit-learn=0.23.*' \
+    'scipy=1.5.*' \
+    'seaborn=0.10.*' \
+    'sqlalchemy=1.3.*' \
+    'widgetsnbextension=3.5.*'\
+    && \
+    conda clean --all -f -y && \
+    # Activate ipywidgets extension in the environment that runs the notebook server
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
+    jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
+    jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
+    jupyter lab build -y && \
+    jupyter lab clean -y && \
+    npm cache clean --force && \
+    rm -rf "/home/${NB_USER}/.cache/yarn" && \
+    rm -rf "/home/${NB_USER}/.node-gyp" && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+USER root
+
+ADD start-elyra.sh /usr/local/bin/start-elyra.sh
+
+RUN chmod ugo+x /usr/local/bin/start-elyra.sh && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+USER $NB_UID
+
+COPY requirements.txt .
+
+RUN python -m pip install --upgrade pip && \
+    pip install --no-deps -r requirements.txt &&\
+    echo "scripts-prepend-node-path=true" >> /home/jovyan/.npmrc && \
+    echo "prefix=/home/jovyan/.npm-global" >> /home/jovyan/.npmrc && \
+    mkdir -p /home/jovyan/.npm-global && \
+    npm install -g yarn && \
+    npm install -g npm && \
+    pip install --upgrade --force --no-deps elyra && jupyter lab build
+
+WORKDIR $HOME

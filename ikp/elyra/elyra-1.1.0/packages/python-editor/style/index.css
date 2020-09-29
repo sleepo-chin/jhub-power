@@ -1,0 +1,75 @@
+/*
+ * Copyright 2018-2020 IBM Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.elyra-PythonEditor-OutputArea-error {
+  background-color: var(--jp-rendermime-error-background);
+}
+
+.elyra-PythonEditor-OutputArea-child {
+  border-top: 1px solid var(--jp-border-color2);
+  border-bottom: 1px solid var(--jp-border-color2);
+}
+
+.elyra-PythonEditor-OutputArea-prompt {
+  flex: 0 0 37px;
+  border-right: 1px solid var(--jp-border-color2);
+  padding: unset;
+  text-align: center;
+}
+
+.elyra-PythonEditor-OutputArea-output {
+  padding: var(--jp-code-padding);
+  border: var(--jp-border-width) solid transparent;
+  margin-right: 64px;
+}
+
+.elyra-PythonEditor-scrollTop {
+  top: 33px;
+}
+
+.elyra-PythonEditor-scrollBottom {
+  top: 62px;
+}
+
+.elyra-PythonEditor-scrollBottom,
+.elyra-PythonEditor-scrollTop {
+  position: absolute;
+  right: 21px;
+  z-index: 1;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  border-width: 0px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+button.elyra-PythonEditor-scrollTop:hover {
+  background-color: var(--jp-layout-color2);
+}
+
+button.elyra-PythonEditor-scrollBottom:hover {
+  background-color: var(--jp-layout-color2);
+}
+
+.elyra-PythonEditor-scrollBottom g[fill],
+.elyra-PythonEditor-scrollTop g[fill] {
+  fill: var(--jp-inverse-layout-color3);
+}
+
+.jp-Document .jp-Toolbar.elyra-PythonEditor-Toolbar {
+  justify-content: flex-start;
+}

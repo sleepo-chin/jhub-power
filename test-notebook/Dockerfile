@@ -1,4 +1,4 @@
-FROM ppc64le/ubuntu:18.04
+FROM nvidia/cuda-ppc64le:10.2-cudnn7-devel
 
 LABEL maintainer="Ilsiyar Gaynutdinov <ilsiyar_gaynutdinov@ru.ibm.com>"
 ARG NB_USER="jovyan"

@@ -1,0 +1,6 @@
+pytest>=5.4.1
+pytest-tornasync
+pytest-console-scripts
+flake8
+hacking
+requests-unixsocket

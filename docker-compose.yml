@@ -3,7 +3,7 @@ version: '3'
 services:
   jupyterhub:
     build: jupyterhub
-    image: jupyterhub_img
+    image: jupyterhub_img2
     container_name: jupyterhub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -11,18 +11,19 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DOCKER_JUPYTER_CONTAINER=jupyter-notebook-1
+      - DOCKER_JUPYTER_CONTAINER=elyra_img1
       - DOCKER_NETWORK_NAME=${COMPOSE_PROJECT_NAME}_default
       - HUB_IP=jupyterhub
       - HOST
     restart: on-failure
 
   jupyterlab:
-    build: jupyterlab
-    image: jupyter-notebook-1
+    image: powerai:0.1
     container_name: jupyterlab-throaway
     network_mode: none
     command: echo
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
 
 volumes:
   jupyterhub_data:

@@ -2,7 +2,7 @@ FROM openjupyter/jupyterhub-ppc64le:1.1.0
 
 RUN useradd admin
 
-COPY jupyterhub_config.py .
+COPY jupyterhub_config.py jupyterhub_config.py
 
 RUN pip install \
     dockerspawner==0.10.0 \

@@ -1,5 +1,5 @@
 
-#ction
+#Action
 #
 ## If you update this file, do not forget to delete the `jupyterhub_data` volume before restarting the jupyterhub service:
 ##
@@ -14,7 +14,7 @@ import os
 
 ## Generic
 c.JupyterHub.admin_access = True
-#c.Spawner.default_url = '/lab'
+c.Spawner.default_url = '/lab'
 c.Authenticator.admin_users = { 'admin' }
 c.JupyterHub.authenticator_class = 'jupyterhub.auth.DummyAuthenticator'
 c.DummyAuthenticator.password = "P@ssw0rd"
