@@ -69,6 +69,11 @@ RUN conda config --prepend channels \
     https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda/ &&\
     conda create --name wmlce python=3.7* powerai=1.7.0
 
+RUN conda install -n wmlce --quiet --yes 'tini=0.18.0' && \
+    conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 
 USER $NB_UID

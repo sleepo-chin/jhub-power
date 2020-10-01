@@ -125,7 +125,7 @@ spec:
 
           # NOTE: This requires appropriate volume mounts to make notebook dir accessible
         - name: EG_MIRROR_WORKING_DIRS
-          value: "False"
+          value: "True"
 
           # Current idle timeout is 1 hour.
         - name: EG_CULL_IDLE_TIMEOUT

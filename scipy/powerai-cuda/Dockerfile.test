@@ -1,0 +1,32 @@
+FROM notebook/cuda:v10.2
+
+USER root
+
+# ffmpeg for matplotlib anim & dvipng for latex labels
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ffmpeg dvipng && \
+    rm -rf /var/lib/apt/lists/*
+
+USER $NB_UID
+
+ENV IBM_POWERAI_LICENSE_ACCEPT=yes
+
+# Install Python 3 packages
+RUN conda config --prepend channels \
+    https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda/ &&\
+    conda install --quiet --yes \
+    powerai=1.7.0 && \
+    conda clean --all -f -y && \
+    npm cache clean --force && \
+    rm -rf "/home/${NB_USER}/.cache/yarn" && \
+    rm -rf "/home/${NB_USER}/.node-gyp" && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+USER $NB_UID
+
+
+USER $NB_UID
+
+
+WORKDIR $HOME
